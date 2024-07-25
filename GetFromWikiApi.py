@@ -38,7 +38,11 @@ while True:
         birdName = birdName[num-1]
         birdInfo = WikiApiGet(birdName)
 
+        birdName = birdName.split("\n")
+        birdName = "".join(birdName)
+
         conStat = ""
+        wikiLink = ""
         try:
             if("Least Concern" in birdInfo['parse']['text']):
                 conStat = "Least Concern"
@@ -56,11 +60,12 @@ while True:
                 conStat = "Extinct"
             else:
                 conStat = "Unknown"
+
+            wikiLink = f"Wiki link: https://en.wikipedia.org/wiki/{birdName}"
         except:
             conStat = "Unknown"
-            
-        birdName = birdName.split("\n")
-        birdName = "".join(birdName)
+            wikiLink = "Wiki link: Unavailable"
+
         print(f"Bird name: {birdName}")
         imageLink = ""
         try:
@@ -70,7 +75,7 @@ while True:
             print("Image not available")
             imageLink = "Image not available"
         print(f"Conservation status: {conStat}")
-        print(f"Wiki link: https://en.wikipedia.org/wiki/{birdName}")
+        print(wikiLink)
         i = open("BotD.txt", "w")
         i.write(f"{birdName}\n{imageLink}\n{conStat}\nhttps://en.wikipedia.org/wiki/{birdName}")
         i.close()
