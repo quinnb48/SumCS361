@@ -39,29 +39,39 @@ while True:
         birdInfo = WikiApiGet(birdName)
 
         conStat = ""
-        if("Least Concern" in birdInfo['parse']['text']):
-            conStat = "Least Concern"
-        elif("Near Threatened" in birdInfo['parse']['text']):
-            conStat = "Near Threatened"
-        elif("Vulnerable" in birdInfo['parse']['text']):
-            conStat = "Vulnerable"
-        elif("Endangered" in birdInfo['parse']['text']):
-            conStat = "Endangered"
-        elif("Critically Endangered" in birdInfo['parse']['text']):
-            conStat = "Critically Endangered"
-        elif("Extinct in the Wild" in birdInfo['parse']['text']):
-            conStat = "Extinct in the Wild"
-        elif("Extinct" in birdInfo['parse']['text']):
-            conStat = "Extinct"
-        else:
+        try:
+            if("Least Concern" in birdInfo['parse']['text']):
+                conStat = "Least Concern"
+            elif("Near Threatened" in birdInfo['parse']['text']):
+                conStat = "Near Threatened"
+            elif("Vulnerable" in birdInfo['parse']['text']):
+                conStat = "Vulnerable"
+            elif("Endangered" in birdInfo['parse']['text']):
+                conStat = "Endangered"
+            elif("Critically Endangered" in birdInfo['parse']['text']):
+                conStat = "Critically Endangered"
+            elif("Extinct in the Wild" in birdInfo['parse']['text']):
+                conStat = "Extinct in the Wild"
+            elif("Extinct" in birdInfo['parse']['text']):
+                conStat = "Extinct"
+            else:
+                conStat = "Unknown"
+        except:
             conStat = "Unknown"
+            
         birdName = birdName.split("\n")
         birdName = "".join(birdName)
         print(f"Bird name: {birdName}")
-        print(f"Image link: /wiki/File:{birdInfo['parse']['images'][0]}")
+        imageLink = ""
+        try:
+            print(f"Image link: /wiki/File:{birdInfo['parse']['images'][0]}")
+            imageLink = f"/wiki/File:{birdInfo['parse']['images'][0]}"
+        except:
+            print("Image not available")
+            imageLink = "Image not available"
         print(f"Conservation status: {conStat}")
         print(f"Wiki link: https://en.wikipedia.org/wiki/{birdName}")
         i = open("BotD.txt", "w")
-        i.write(f"{birdName}\n/wiki/File:{birdInfo['parse']['images'][0]}\n{conStat}\nhttps://en.wikipedia.org/wiki/{birdName}")
+        i.write(f"{birdName}\n{imageLink}\n{conStat}\nhttps://en.wikipedia.org/wiki/{birdName}")
         i.close()
     p.close()
