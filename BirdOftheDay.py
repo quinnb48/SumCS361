@@ -4,9 +4,10 @@ import time
 import random
 
 time.sleep(1)
-p = open("BotD.txt", "w")
-p.write("run")
-p.close()
+#p = open("BotD.txt", "w")
+#p.write("run")
+#p.close()
+print("Welcome to Bird of the Day! The current Bird of the Day is...")
 while True:
     time.sleep(3)
     p = open("BotD.txt", "r")
@@ -16,5 +17,7 @@ while True:
         print(f"Bird image: {text[1]}")
         print(f"Conservation status: {text[2]}")
         print(f"Wiki link: {text[3]}")
+        #p.close()
+        #break
 
     p.close()
