@@ -18,11 +18,23 @@ def WikiApiGet(name):
     name = name.split("\n")
     name = "".join(name)
     url = f'https://en.wikipedia.org/w/api.php?action=parse&format=json&page={name}&redirects=1&prop=images%7Ctext&disableeditsection=1&disabletoc=1&formatversion=2'
-    result = get(url)
+    headers = {'User-Agent': 'BirdOfTheDay/1.0 (https://github.com/quinnb48/SumCS361; quinnbehrens@gmail.com)'}
+    result = get(url, headers = headers)
     json_result = result.json()
     #print("Result: ")
     #print(json_result)
     return json_result
+
+def WikiApiImageUrlGet(file):
+    url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&prop=imageinfo&meta=&titles=File%3A{file}&formatversion=2&iiprop=url"
+    headers = {'User-Agent': 'BirdOfTheDay/1.0 (https://github.com/quinnb48/SumCS361; quinnbehrens@gmail.com)'}
+    result = get(url, headers = headers)
+    json_result = result.json()
+    try:
+        print(json_result["query"]["pages"][0]["imageinfo"][0]["url"])
+        return json_result["query"]["pages"][0]["imageinfo"][0]["url"]
+    except:
+        return "error getting image"
 
 while True:
     time.sleep(1)
@@ -69,8 +81,8 @@ while True:
         print(f"Bird name: {birdName}")
         imageLink = ""
         try:
-            print(f"Image link: /wiki/File:{birdInfo['parse']['images'][0]}")
-            imageLink = f"/wiki/File:{birdInfo['parse']['images'][0]}"
+            imageLink = WikiApiImageUrlGet(birdInfo['parse']['images'][0])
+            print(f"Image file: {imageLink}")
         except:
             print("Image not available")
             imageLink = "Image not available"
