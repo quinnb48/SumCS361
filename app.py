@@ -13,7 +13,7 @@ from tkinter import filedialog, messagebox
 # https://stackoverflow.com/questions/66663179/how-to-use-windows-file-explorer-to-select-and-return-a-directory-using-python
 
 #headers for get requests
-HEADERS = headers = {'User-Agent': 'BirdOfTheDay/1.0 (https://github.com/quinnb48/SumCS361; quinnbehrens@gmail.com)'}
+HEADERS = {'User-Agent': 'BirdOfTheDay/1.0 (https://github.com/quinnb48/SumCS361; quinnbehrens@gmail.com)'}
 
 class PhotoMonitor:
     """
